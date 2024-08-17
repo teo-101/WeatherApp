@@ -32,36 +32,6 @@ app.get('/api/weather', (req, res) => {
   });
 });
 
-app.get('/api/coords', (req, res) => {
-  const apiKey = process.env.API_KEY;
-  const city = req.query.city;
-  const country = req.query.country;
-
-  if (!city || !country) {
-    return res.status(400).json({ error: 'City and Country are required' });
-  }
-
-  const url = `https://api.openweathermap.org/geo/1.0/direct?q=${city},${country}&appid=${apiKey}`;
-
-  https.get(url, (apiRes) => {
-    let data = '';
-
-    apiRes.on('data', (chunk) => {
-      data += chunk;
-    });
-
-    apiRes.on('end', () => {
-      try {
-        res.json(JSON.parse(data));
-      } catch (e) {
-        res.status(500).json({ error: 'Failed to parse API response' });
-      }
-    });
-  }).on('error', (err) => {
-    res.status(500).json({ error: 'Failed to fetch data from API' });
-  });
-});
-
 app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

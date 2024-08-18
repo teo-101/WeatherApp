@@ -8,6 +8,7 @@
   <title>WeatherApp</title>
 </head>
 <body onload="lastUpdate()">
+  <button id="btn"></button>
   <section id="container">
     <main>
       <img id="image" src="img/clear.png" width="150px" height="150px">
@@ -31,7 +32,27 @@
     </main>
     
     <aside>
-      <button id="btn">Fetch</button>
+      <section id="forecast">
+        <div class="days"></div>
+        <div class="days"></div>
+        <div class="days"></div>
+        <div class="days"></div>
+        <div class="days"></div>
+      </section>
+
+      <section id="highlight">
+        <section id="sec1">
+          <div class="highlights" id="air"></div>
+          <div class="highlights" id="feel"></div>
+          <div class="highlights endLine" id="wind"></div>
+        </section>
+
+        <section id="sec2">
+          <div class="highlights" id="visibillity"></div>
+          <div class="highlights" id="sun"></div>
+          <div class="highlights endLine" id="humidity"></div>
+        </section>
+      </section>
     </aside>
   </section>
   

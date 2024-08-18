@@ -250,6 +250,30 @@ aside {
 
 #humidity h2 {
   font-family: 'Montserrat', sans-serif;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin: 0;
+}
+
+#visibility {
+  flex-direction: column;
+}
+
+#visibility h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#vis , #visQuality {
+  font-family: 'Roboto', monospace;
+  font-size: 1.7rem;
+  margin: 2vh 0 0 0;
+}
+
+#visQuality {
+  font-size: 1.2rem;
+}
+
+#vis {
+  letter-spacing: 1.5px;
 }

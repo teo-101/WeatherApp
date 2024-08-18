@@ -10,16 +10,20 @@ const country = document.getElementById('country');
 
 const clouds = document.getElementById('cloudPercent');
 const humidity = document.getElementById('humPercent');
+const visQuality = document.getElementById('visQuality');
+const visibility = document.getElementById('vis');
 
 function lastUpdate() {
   wStatus.innerText = localStorage.getItem('weatherStatus');
   temperature.innerHTML = `${localStorage.getItem('weatherTemp')}<sup>°C</sup>`;
   linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${localStorage.getItem('weatherIcon')}.png`);
-  rainPercent.innerText = `Rain - ${localStorage.getItem('weatherRainPercent')} mm/h`;
+  rainPercent.innerText = `Rain - ${localStorage.getItem('weatherRainPercent')}mm/h`;
   city.innerText = localStorage.getItem('weatherCity');
   country.innerText = `, ${localStorage.getItem('weatherCountry')}`;
   clouds.innerText = `${localStorage.getItem('weatherClouds')}%`
   humidity.innerText = `${localStorage.getItem('weatherHumidity')}%`;
+  visibility.innerText = `${localStorage.getItem('weatherVisibility')} M`;
+  visQuality.innerText = `${localStorage.getItem('visQuality')}`;
 }
 
 btn.addEventListener("click", () => {
@@ -43,16 +47,21 @@ btn.addEventListener("click", () => {
             const weatherCountry = data.sys.country;
             const weatherClouds = data.clouds.all;
             const weatherHumidity = data.main.humidity;
+            const weatherVisibility = data.visibility;
+            const weatherRainPercent = 0;
 
             if (data.rain) {
-              const weatherRainPercent = data.rain['1h'];
-              localStorage.setItem('weatherRainPercent', weatherRainPercent);
-              rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
+              weatherRainPercent = data.rain['1h'];
             }
-            else {
-              const weatherRainPercent = 0;
-              localStorage.setItem('weatherRainPercent', weatherRainPercent);
-              rainPercent.innerText = `Rain - ${weatherRainPercent} mm/h`;
+
+            if (weatherVisibility < 5000) {
+              visQuality.innerText = 'Poor';
+            }
+            else if (weatherVisibility >= 5000 && weatherVisibility < 10000) {
+              visQuality.innerText = 'Moderate';
+            }
+            else if (weatherVisibility >= 10000) {
+              visQuality.innerText = 'Excellent';
             }
 
             localStorage.setItem('weatherStatus', weatherStatus);
@@ -62,7 +71,11 @@ btn.addEventListener("click", () => {
             localStorage.setItem('weatherCountry' ,weatherCountry);
             localStorage.setItem('weatherClouds', weatherClouds);
             localStorage.setItem('weatherHumidity', weatherHumidity);
+            localStorage.setItem('weatherRainPercent', weatherRainPercent);
+            localStorage.setItem('visQuality', visQuality.innerText);
+            localStorage.setItem('weatherVisibility', weatherVisibility);
             
+            rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
             wStatus.innerText = weatherStatus;
             temperature.innerHTML = `${weatherTemp}<sup>°C</sup>`;
             linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${weatherIcon}.png`);
@@ -70,6 +83,7 @@ btn.addEventListener("click", () => {
             country.innerText = `, ${weatherCountry}`;
             clouds.innerText = `${weatherClouds}%`;
             humidity.innerText = `${weatherHumidity}%`;
+            visibility.innerText = `${weatherVisibility} M`;
           })
           .catch(error => {
             console.error('Error:', error); // Handle any errors

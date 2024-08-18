@@ -320,3 +320,22 @@ aside {
 #windSpeed {
   margin: 2vh 0 1vh 0!important;
 }
+
+#sun {
+  flex-direction: column;
+}
+
+.suns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+}
+
+.suns p {
+  font-family: 'Roboto', monospace;
+  font-size: 1rem;
+  margin-left: 1vw;
+}

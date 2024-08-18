@@ -15,6 +15,18 @@ const visibility = document.getElementById('vis');
 const airQuality = document.getElementById('airQuality');
 const windSpeed = document.getElementById('windSpeed');
 const windDeg = document.getElementById('windDeg');
+const sunrise = document.getElementById('sunriseTime');
+const sunset = document.getElementById('sunsetTime');
+
+function convertFromUnixTime(unix) {
+  const time = new Date(unix * 1000);
+  return time.toLocaleTimeString(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+    second: undefined,
+    hour12: true
+  });
+}
 
 function getWindDirection(deg) {
   switch (true) {
@@ -53,6 +65,8 @@ function lastUpdate() {
   airQuality.innerText = `${localStorage.getItem('aqi')}`;
   windDeg.innerText = getWindDirection(localStorage.getItem('weatherWindDeg'));
   windSpeed.innerText = `${localStorage.getItem('weatherWindSpeed')} KM/H`;
+  sunrise.innerText = convertFromUnixTime(localStorage.getItem('weatherSunrise'));
+  sunset.innerText = convertFromUnixTime(localStorage.getItem('weatherSunset'));
 }
 
 
@@ -82,6 +96,8 @@ btn.addEventListener("click", () => {
             const weatherRainPercent = 0;
             const weatherWindSpeed = parseInt(parseFloat(data.wind.speed) * 3.6); // Transformation from m/s to km/h
             const weatherWindDeg = parseInt(data.wind.deg);
+            const weatherSunrise = data.sys.sunrise;
+            const weatherSunset = data.sys.sunset;
 
             if (data.rain) {
               weatherRainPercent = data.rain['1h'];
@@ -111,6 +127,8 @@ btn.addEventListener("click", () => {
             localStorage.setItem('weatherVisibility', weatherVisibility);
             localStorage.setItem('weatherWindSpeed', weatherWindSpeed);
             localStorage.setItem('weatherWindDeg', weatherWindDeg);
+            localStorage.setItem('weatherSunrise', weatherSunrise);
+            localStorage.setItem('weatherSunset', weatherSunset);
             
             rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
             wStatus.innerText = weatherStatus;
@@ -122,6 +140,8 @@ btn.addEventListener("click", () => {
             humidity.innerText = `${weatherHumidity}%`;
             visibility.innerText = `${weatherVisibility} M`;
             windSpeed.innerText = `${weatherWindSpeed} KM/H`;
+            sunrise.innerText = convertFromUnixTime(weatherSunrise);
+            sunset.innerText = convertFromUnixTime(weatherSunset);
           })
           .catch(error => {
             console.error('Error:', error); // Handle any errors

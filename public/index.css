@@ -227,3 +227,29 @@ aside {
 #cloud {
   flex-direction: column;
 }
+
+#humidity {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#humidity div {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto', monospace;
+  font-size: 2.5rem;
+}
+
+#humidity p {
+  margin: 2vh 0 2vh 0.5vw;
+}
+
+#humidity h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin: 0;
+}

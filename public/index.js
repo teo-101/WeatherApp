@@ -9,6 +9,7 @@ const city = document.getElementById('city');
 const country = document.getElementById('country');
 
 const clouds = document.getElementById('cloudPercent');
+const humidity = document.getElementById('humPercent');
 
 function lastUpdate() {
   wStatus.innerText = localStorage.getItem('weatherStatus');
@@ -18,6 +19,7 @@ function lastUpdate() {
   city.innerText = localStorage.getItem('weatherCity');
   country.innerText = `, ${localStorage.getItem('weatherCountry')}`;
   clouds.innerText = `${localStorage.getItem('weatherClouds')}%`
+  humidity.innerText = `${localStorage.getItem('weatherHumidity')}%`;
 }
 
 btn.addEventListener("click", () => {
@@ -40,6 +42,7 @@ btn.addEventListener("click", () => {
             const weatherCity = data.name;
             const weatherCountry = data.sys.country;
             const weatherClouds = data.clouds.all;
+            const weatherHumidity = data.main.humidity;
 
             if (data.rain) {
               const weatherRainPercent = data.rain['1h'];
@@ -58,13 +61,15 @@ btn.addEventListener("click", () => {
             localStorage.setItem('weatherCity' ,weatherCity);
             localStorage.setItem('weatherCountry' ,weatherCountry);
             localStorage.setItem('weatherClouds', weatherClouds);
+            localStorage.setItem('weatherHumidity', weatherHumidity);
             
             wStatus.innerText = weatherStatus;
             temperature.innerHTML = `${weatherTemp}<sup>°C</sup>`;
             linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${weatherIcon}.png`);
             city.innerText = weatherCity;
             country.innerText = `, ${weatherCountry}`;
-            clouds.innerText = `${weatherClouds}%`
+            clouds.innerText = `${weatherClouds}%`;
+            humidity.innerText = `${weatherHumidity}%`;
           })
           .catch(error => {
             console.error('Error:', error); // Handle any errors

@@ -7,6 +7,7 @@ const hourElem = document.getElementById('hour');
 const rainPercent = document.getElementById('rainPercent');
 const city = document.getElementById('city');
 const country = document.getElementById('country');
+const icon = document.getElementById('weatherIcon')
 
 const clouds = document.getElementById('cloudPercent');
 const humidity = document.getElementById('humPercent');
@@ -54,13 +55,14 @@ function getWindDirection(deg) {
 function lastUpdate() {
   wStatus.innerText = localStorage.getItem('weatherStatus');
   temperature.innerHTML = `${localStorage.getItem('weatherTemp')}<sup>°C</sup>`;
-  linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${localStorage.getItem('weatherIcon')}.png`);
+  linkIcon.setAttribute('href',`/img/${localStorage.getItem('weatherIcon')}.png`);
+  icon.src = `/img/${localStorage.getItem('weatherIcon')}.png`;
   rainPercent.innerText = `Rain - ${localStorage.getItem('weatherRainPercent')}mm/h`;
   city.innerText = localStorage.getItem('weatherCity');
   country.innerText = `, ${localStorage.getItem('weatherCountry')}`;
   clouds.innerText = `${localStorage.getItem('weatherClouds')}%`
   humidity.innerText = `${localStorage.getItem('weatherHumidity')}%`;
-  visibility.innerText = `${localStorage.getItem('weatherVisibility')} M`;
+  visibility.innerText = `${localStorage.getItem('weatherVisibility')} KM`;
   visQuality.innerText = `${localStorage.getItem('visQuality')}`;
   airQuality.innerText = `${localStorage.getItem('aqi')}`;
   windDeg.innerText = getWindDirection(localStorage.getItem('weatherWindDeg'));
@@ -87,15 +89,15 @@ btn.addEventListener("click", () => {
 
             const weatherStatus = data.weather[0].main;
             const weatherTemp = parseInt(parseFloat(data.main.temp) - 273.15);
-            const weatherIcon = data.weather[0].icon;
+            const weatherIcon = weatherStatus;
             const weatherCity = data.name;
             const weatherCountry = data.sys.country;
             const weatherClouds = data.clouds.all;
             const weatherHumidity = data.main.humidity;
-            const weatherVisibility = data.visibility;
+            const weatherVisibility = data.visibility / 1000;
             const weatherRainPercent = 0;
-            const weatherWindSpeed = parseInt(parseFloat(data.wind.speed) * 3.6); // Transformation from m/s to km/h
-            const weatherWindDeg = parseInt(data.wind.deg);
+            const weatherWindSpeed = parseFloat((parseFloat(data.wind.speed) * 3.6).toFixed(2)); // Transformation from m/s to km/h
+            const weatherWindDeg = parseFloat(data.wind.deg);
             const weatherSunrise = data.sys.sunrise;
             const weatherSunset = data.sys.sunset;
 
@@ -103,13 +105,13 @@ btn.addEventListener("click", () => {
               weatherRainPercent = data.rain['1h'];
             }
 
-            if (weatherVisibility < 5000) {
+            if (weatherVisibility < 5) {
               visQuality.innerText = 'Poor';
             }
-            else if (weatherVisibility >= 5000 && weatherVisibility < 10000) {
+            else if (weatherVisibility >= 5 && weatherVisibility < 10) {
               visQuality.innerText = 'Moderate';
             }
-            else if (weatherVisibility >= 10000) {
+            else if (weatherVisibility >= 10) {
               visQuality.innerText = 'Excellent';
             }
 
@@ -133,12 +135,13 @@ btn.addEventListener("click", () => {
             rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
             wStatus.innerText = weatherStatus;
             temperature.innerHTML = `${weatherTemp}<sup>°C</sup>`;
-            linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${weatherIcon}.png`);
+            linkIcon.setAttribute('href',`/img/${weatherIcon}.png`);
+            icon.src = `/img/${weatherIcon}.png`;
             city.innerText = weatherCity;
             country.innerText = `, ${weatherCountry}`;
             clouds.innerText = `${weatherClouds}%`;
             humidity.innerText = `${weatherHumidity}%`;
-            visibility.innerText = `${weatherVisibility} M`;
+            visibility.innerText = `${weatherVisibility} KM`;
             windSpeed.innerText = `${weatherWindSpeed} KM/H`;
             sunrise.innerText = convertFromUnixTime(weatherSunrise);
             sunset.innerText = convertFromUnixTime(weatherSunset);

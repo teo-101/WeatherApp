@@ -11,7 +11,7 @@
   <button id="btn"></button>
   <section id="container">
     <main>
-      <img id="image" src="img/clear.png" width="150px" height="150px">
+      <img id="weatherIcon" width="150px" height="150px">
       
       <p id="temp"></p>
 
@@ -84,20 +84,30 @@
         <section id="sec1">
           <div class="highlights" id="air">
             <h2>Air Pollution</h2>
-            <p id="airQuality"></p>
+            <div>
+              <img src="/img/quality.png" width="40px" height="40xp">
+              <p id="airQuality"></p>
+            </div>
           </div>
           <div class="highlights" id="cloud">
             <h2>Cloud Coverage</h2>
             <div>
-              <img src="img/clouds.png" width="50px" height="50px">
+              <img src="img/cloudy.png" width="40px" height="40px">
               <p id="cloudPercent"></p>
             </div>
           </div>
           <div class="highlights endLine" id="wind">
-            <h2>Wind</h2>
-            <div>
-              <p id="windSpeed"></p>
-              <p id="windDeg"></p>
+            <h2>Wind - <span>Speed & Bearing</span></h2>
+            <div id="windContainer">
+              <div class="dividers">
+                <img src="/img/zigzag.png" height="40px" width="40px">
+                <p id="windSpeed"></p>
+              </div>
+              
+              <div class="dividers">
+                <img src="/img/compass.png" height="40px" width="40px">
+                <p id="windDeg"></p>
+              </div>
             </div>
           </div>
         </section>
@@ -105,23 +115,27 @@
         <section id="sec2">
           <div class="highlights" id="visibility">
             <h2>Visibility</h2>
-            <p id="vis"></p>
+            <div>
+              <img src="/img/vis.png" width="40xp" height="40px">
+              <p id="vis"></p>
+            </div>
             <p id="visQuality"></p>
           </div>
           <div class="highlights" id="sun">
+            <h2>Sunrise & Sunset</h2>
             <div class="suns" id="sunrise">
-              <h2>Sunrise:</h2>
+              <img src="/img/sunrise.png" width="40px" height="40px">
               <p id="sunriseTime"></p>
             </div>
             <div class="suns" id="sunset">
-              <h2>Sunset:</h2>
+              <img src="/img/sunset.png" width="40px" height="40px">
               <p id="sunsetTime"></p>
             </div>
           </div>
           <div class="highlights endLine" id="humidity">
             <h2>Humidity</h2>
             <div>
-              <img src="img/rain.png" width="50px" height="50px">
+              <img src="img/umbrella.png" width="40px" height="40px">
               <p id="humPercent"></p>
             </div>
           </div>

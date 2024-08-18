@@ -26,4 +26,7 @@ Simple weather app that uses OpenWeatherMap's api to fetch local forecast data a
 
 - OpenWeatherMap <a href="https://openweathermap.org/api">API</a>
 - Flaticon weather icons <a href="https://www.flaticon.com/free-icons/weather" title="weather icons">Weather icons created by Tempo_doloe - Flaticon</a> <a href="https://www.flaticon.com/packs/weather-550?word=weather">PACK</a>
+- Compass icon by Tempo_doloe <a href="https://www.flaticon.com/free-icon/compass_4724475?term=compass&page=1&position=10&origin=style&related_id=4724475">Flaticon</a>
+- UI Icon pack by Tempo_doloe <a href="https://www.flaticon.com/packs/user-interface-1006">Flaticon</a>
+- Web Icon Pack by Tempo_doloe <a href="https://www.flaticon.com/packs/web-buttons-20">Flaticon</a>
 - Wallart.jpg (<a href="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.peakpx.com%2Fen%2Fsearch%3Fq%3Dlandscape%2Bminimal&psig=AOvVaw2EY_an4rSRauY8c9HfMZpD&ust=1724030061046000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODCx8yu_YcDFQAAAAAdAAAAABAQ" title="location background image">Location background image</a>)

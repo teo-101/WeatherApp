@@ -277,3 +277,19 @@ aside {
 #vis {
   letter-spacing: 1.5px;
 }
+
+#air {
+  flex-direction: column;
+}
+
+#air h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+#air p {
+  font-size: 2rem;
+  margin: 2vh 0 2vh 0;
+  font-family: 'Roboto', monospace;
+}

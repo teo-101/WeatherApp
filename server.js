@@ -32,6 +32,32 @@ app.get('/api/weather', (req, res) => {
   });
 });
 
+app.get('/api/airQuality', (req, res) => {
+  const apiKey = process.env.API_KEY;
+  const lat = req.query.lat;
+  const lon = req.query.lon;
+
+  if (!lat || !lon) {
+    return res.status(400).json({ error: 'Latitude and Longitude are required' });
+  }
+
+  const url = `https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+  https.get(url ,(apiRes) => {
+    let data = '';
+
+    apiRes.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    apiRes.on('end', () => {
+      res.json(JSON.parse(data));
+    });
+  }).on('error', (err) => {
+    res.status(500).json({error: 'Failed to fetch data from API'});
+  });
+});
+
 app.get('/', (req,res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });

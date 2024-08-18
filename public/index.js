@@ -12,6 +12,7 @@ const clouds = document.getElementById('cloudPercent');
 const humidity = document.getElementById('humPercent');
 const visQuality = document.getElementById('visQuality');
 const visibility = document.getElementById('vis');
+const airQuality = document.getElementById('airQuality');
 
 function lastUpdate() {
   wStatus.innerText = localStorage.getItem('weatherStatus');
@@ -24,7 +25,10 @@ function lastUpdate() {
   humidity.innerText = `${localStorage.getItem('weatherHumidity')}%`;
   visibility.innerText = `${localStorage.getItem('weatherVisibility')} M`;
   visQuality.innerText = `${localStorage.getItem('visQuality')}`;
+  airQuality.innerText = `${localStorage.getItem('aqi')}`;
 }
+
+
 
 btn.addEventListener("click", () => {
   if (navigator.geolocation) {
@@ -88,6 +92,27 @@ btn.addEventListener("click", () => {
           .catch(error => {
             console.error('Error:', error); // Handle any errors
           });
+
+          fetch(`/api/airQuality?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              const weatherAirQ = data.list[0].main.aqi;
+              if (weatherAirQ === 1) {
+                airQuality.innerText = 'Good';
+              } else if (weatherAirQ === 2) {
+                airQuality.innerText = 'Fair';
+              } else if (weatherAirQ === 3) {
+                airQuality.innerText = 'Moderate';
+              } else if (weatherAirQ === 4) {
+                airQuality.innerText = 'Poor';
+              } else if (weatherAirQ === 5) {
+                airQuality.innerText = 'Very Poor';
+              }
+              localStorage.setItem('aqi', airQuality.innerText);
+            }).catch(error => {
+              console.error('Error:', error);
+            })
       },
       (error) => {
         // Handle errors from the geolocation API

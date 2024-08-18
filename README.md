@@ -1,9 +1,28 @@
 # WeatherApp
 
 ## Project Description
+**PROJECT BASED LEARNING.**<br>
+Simple weather app that uses OpenWeatherMap's api to fetch local forecast data and display it in modern user interface. I used this repository to learn and practice how to use API fetch and other server-side practices.
+
+## Used Technology
+### Client-side
+- HTML & CSS
+- Web-side JS for fetching data from endpoints and other data operations.
+- Flaticon assets (credits at the end)
+
+### Server-side
+- *Node.js* for server-side JS use.
+- *Express.js* to run the server.
+- *dotenv* for hiding the API key.
+- *Https endports*
+- *OpenWeatherMap API*:
+    - Current Weather Data
+    - 5 Days / 3 Hours Forecast
+    - Air Pollution
 
 ## Credits
 
+- OpenWeatherMap <a href="https://openweathermap.org/api">API</a>
 - Sunny.png (<a href="https://www.flaticon.com/free-icons/sun" title="sun icons">Sun icons created by bqlqn - Flaticon</a>)
 - Cloudy.png (<a href="https://www.flaticon.com/free-icons/cloud" title="cloud icons">Cloud icons created by Freepik - Flaticon</a>)
 - Rain.png (<a href="https://www.flaticon.com/free-icons/rainy" title="rainy icons">Rainy icons created by deha21 - Flaticon</a>)

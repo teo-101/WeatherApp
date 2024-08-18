@@ -3,17 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="index.css">
   <link id="linkIcon" rel="icon" href="http://openweathermap.org/img/wn/10d.png">
   <title>WeatherApp</title>
 </head>
 <body onload="lastUpdate()">
-  <h1>Today</h1>
-  <img id="weatherIcon" width="50px" height="50px"><br>
-  <label>Temp:</label>
-  <p id="temp"></p>
-  <label>Status:</label>
-  <p id="status"></p>
-  <button id="btn">Fetch</button>
+  <section id="container">
+    <main>
+      <img id="image" src="img/clear.png" width="150px" height="150px">
+      
+      <p id="temp"></p>
+
+      <p id="date">
+        <span id="day"></span>, 
+        <span id="hour"></span>
+      </p>
+
+      <div id="separator"></div>
+
+      <p id="status"></p>
+      <p id="rainPercent"></p>
+
+      <section id="location">
+        <p id="city"></p>
+        <p id="country"></p>
+      </section>
+    </main>
+    
+    <aside>
+      <button id="btn">Fetch</button>
+    </aside>
+  </section>
+  
   <script src="index.js"></script>
 </body>
 </html>

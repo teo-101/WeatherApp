@@ -2,13 +2,19 @@ const btn = document.getElementById('btn');
 const temperature = document.getElementById('temp');
 const wStatus = document.getElementById('status');
 const linkIcon = document.getElementById('linkIcon');
-const weatherIconImg = document.getElementById('weatherIcon');
+const dayElem = document.getElementById('day');
+const hourElem = document.getElementById('hour');
+const rainPercent = document.getElementById('rainPercent');
+const city = document.getElementById('city');
+const country = document.getElementById('country');
 
 function lastUpdate() {
   wStatus.innerText = localStorage.getItem('weatherStatus');
-  temperature.innerText = localStorage.getItem('weatherTemp');
+  temperature.innerHTML = `${localStorage.getItem('weatherTemp')}<sup>°C</sup>`;
   linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${localStorage.getItem('weatherIcon')}.png`);
-  weatherIconImg.setAttribute('src',`http://openweathermap.org/img/wn/${localStorage.getItem('weatherIcon')}.png`);
+  rainPercent.innerText = `Rain - ${localStorage.getItem('weatherRainPercent')} mm/h`;
+  city.innerText = localStorage.getItem('weatherCity');
+  country.innerText = `, ${localStorage.getItem('weatherCountry')}`;
 }
 
 btn.addEventListener("click", () => {
@@ -28,15 +34,31 @@ btn.addEventListener("click", () => {
             const weatherStatus = data.weather[0].main;
             const weatherTemp = parseInt(parseFloat(data.main.temp) - 273.15);
             const weatherIcon = data.weather[0].icon;
+            const weatherCity = data.name;
+            const weatherCountry = data.sys.country;
+
+            if (data.rain) {
+              const weatherRainPercent = data.rain['1h'];
+              localStorage.setItem('weatherRainPercent', weatherRainPercent);
+              rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
+            }
+            else {
+              const weatherRainPercent = 0;
+              localStorage.setItem('weatherRainPercent', weatherRainPercent);
+              rainPercent.innerText = `Rain - ${weatherRainPercent} mm/h`;
+            }
 
             localStorage.setItem('weatherStatus', weatherStatus);
             localStorage.setItem('weatherTemp', weatherTemp);
             localStorage.setItem('weatherIcon', weatherIcon);
+            localStorage.setItem('weatherCity' ,weatherCity);
+            localStorage.setItem('weatherCountry' ,weatherCountry);
             
             wStatus.innerText = weatherStatus;
-            temperature.innerText = weatherTemp;
+            temperature.innerHTML = `${weatherTemp}<sup>°C</sup>`;
             linkIcon.setAttribute('href',`http://openweathermap.org/img/wn/${weatherIcon}.png`);
-            weatherIconImg.setAttribute('src',`http://openweathermap.org/img/wn/${weatherIcon}.png`);
+            city.innerText = weatherCity;
+            country.innerText = `, ${weatherCountry}`;
           })
           .catch(error => {
             console.error('Error:', error); // Handle any errors
@@ -59,3 +81,12 @@ btn.addEventListener("click", () => {
     alert('Geolocation is not supported by this browser.');
   }
 });
+
+const now = new Date();
+const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const day = daysOfWeek[now.getDay()];
+const hour = parseInt(now.getHours());
+
+dayElem.innerText = day;
+hourElem.innerHTML = `${hour}:00`;

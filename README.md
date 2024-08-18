@@ -20,6 +20,8 @@ Simple weather app that uses OpenWeatherMap's api to fetch local forecast data a
     - 5 Days / 3 Hours Forecast
     - Air Pollution
 
+## Project Evolution
+
 ## Credits
 
 - OpenWeatherMap <a href="https://openweathermap.org/api">API</a>

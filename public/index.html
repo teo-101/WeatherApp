@@ -7,8 +7,7 @@
   <link id="linkIcon" rel="icon" href="http://openweathermap.org/img/wn/10d.png">
   <title>WeatherApp</title>
 </head>
-<body onload="lastUpdate()">
-  <button id="btn"></button>
+<body onload="Update()">
   <section id="container">
     <main>
       <img id="weatherIcon" width="150px" height="150px">
@@ -34,51 +33,55 @@
     <aside>
       <section id="forecast">
         <div class="days">
-          <h2>Monday</h2>
-          <img src="img/clouds.png" width="45px" height="45px">
-          <div>
-            <p>30°</p>
+          <h2 class="dayTitle">Day</h2>
+          <img class="dayIcon" width="45px" height="45px">
+          <div class="dayTempContainer">
+            <p class="maxTemp"></p>
             <span>/</span>
-            <p>21°</p>
+            <p class="minTemp"></p>
           </div>
         </div>
         <div class="days">
-          <h2>Tuesday</h2>
-          <img src="img/rain.png" width="45px" height="45px">
-          <div>
-            <p>26°</p>
+          <h2 class="dayTitle">Day</h2>
+          <img class="dayIcon" width="45px" height="45px">
+          <div class="dayTempContainer">
+            <p class="maxTemp"></p>
             <span>/</span>
-            <p>15°</p>
+            <p class="minTemp"></p>
           </div>
         </div>
         <div class="days">
-          <h2>Wednesday</h2>
-          <img src="img/clear.png" width="45px" height="45px">
-          <div>
-            <p>35°</p>
+          <h2 class="dayTitle">Day</h2>
+          <img class="dayIcon" width="45px" height="45px">
+          <div class="dayTempContainer">
+            <p class="maxTemp"></p>
             <span>/</span>
-            <p>13°</p>
+            <p class="minTemp"></p>
           </div>
         </div>
         <div class="days">
-          <h2>Thursday</h2>
-          <img src="img/clouds.png" width="45px" height="45px">
-          <div>
-            <p>20°</p>
+          <h2 class="dayTitle">Day</h2>
+          <img class="dayIcon" width="45px" height="45px">
+          <div class="dayTempContainer">
+            <p class="maxTemp"></p>
             <span>/</span>
-            <p>19°</p>
+            <p class="minTemp"></p>
           </div>
         </div>
         <div class="days">
-          <h2>Friday</h2>
-          <img src="img/rain.png" width="45px" height="45px">
-          <div>
-            <p>15°</p>
+          <h2 class="dayTitle">Day</h2>
+          <img class="dayIcon" width="45px" height="45px">
+          <div class="dayTempContainer">
+            <p class="maxTemp"></p>
             <span>/</span>
-            <p>8°</p>
+            <p class="minTemp"></p>
           </div>
         </div>
       </section>
+
+      <div id="titleContainer">
+        <h2 id="title">Highlights</h2>
+      </div>
 
       <section id="highlight">
         <section id="sec1">

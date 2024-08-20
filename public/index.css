@@ -15,10 +15,11 @@ body {
   height: 90vh;
   background-color: #F6F6F8;
   border-radius: 45px;
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
   flex-direction: row;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  z-index: 1;
 }
 
 main {
@@ -142,10 +143,24 @@ aside {
   display: flex;
   align-items: center;
   flex-direction: column;
+  z-index: 2;
+  transition: ease-in-out 0.1s all;
 }
 
 .days:last-of-type {
   margin-right: 0;
+}
+
+#title {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  left: 7vw;
+  bottom: -3.2vh;
+}
+
+#titleContainer {
+  width: 100%;
 }
 
 #highlight {
@@ -155,6 +170,7 @@ aside {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 0;
 }
 
 #sec1, #sec2 {
@@ -163,7 +179,7 @@ aside {
 }
 
 #sec1 {
-  margin-bottom: 5vh;
+  margin-bottom: 2vh;
 }
 
 .highlights {
@@ -172,7 +188,7 @@ aside {
   margin: 0;
   background-color: #FFFDFE;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  margin-right: 2.5vw;
+  margin-right: 2vw;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -187,6 +203,10 @@ aside {
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
   text-align: center;
+}
+
+.days:hover {
+  scale: 1.15;
 }
 
 .days div {

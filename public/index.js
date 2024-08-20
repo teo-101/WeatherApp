@@ -1,4 +1,3 @@
-const btn = document.getElementById('btn');
 const temperature = document.getElementById('temp');
 const wStatus = document.getElementById('status');
 const linkIcon = document.getElementById('linkIcon');
@@ -9,6 +8,12 @@ const city = document.getElementById('city');
 const country = document.getElementById('country');
 const icon = document.getElementById('weatherIcon')
 
+const fiveDays = document.querySelectorAll('.days');
+const dayTitles = document.querySelectorAll('.dayTitle');
+const dayIcon = document.querySelectorAll('.dayIcon');
+const dayMaxTemp = document.querySelectorAll('.maxTemp');
+const dayMinTemp = document.querySelectorAll('.minTemp');
+
 const clouds = document.getElementById('cloudPercent');
 const humidity = document.getElementById('humPercent');
 const visQuality = document.getElementById('visQuality');
@@ -18,6 +23,17 @@ const windSpeed = document.getElementById('windSpeed');
 const windDeg = document.getElementById('windDeg');
 const sunrise = document.getElementById('sunriseTime');
 const sunset = document.getElementById('sunsetTime');
+
+const now = new Date();
+const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+const day = daysOfWeek[now.getDay()];
+const hours = parseInt(now.getHours());
+const minutes = parseInt(now.getMinutes());
+
+dayElem.innerText = day;
+hourElem.innerHTML = `${hours}:${minutes}`;
+
 
 function convertFromUnixTime(unix) {
   const time = new Date(unix * 1000);
@@ -52,28 +68,7 @@ function getWindDirection(deg) {
   }
 }
 
-function lastUpdate() {
-  wStatus.innerText = localStorage.getItem('weatherStatus');
-  temperature.innerHTML = `${localStorage.getItem('weatherTemp')}<sup>°C</sup>`;
-  linkIcon.setAttribute('href',`/img/${localStorage.getItem('weatherIcon')}.png`);
-  icon.src = `/img/${localStorage.getItem('weatherIcon')}.png`;
-  rainPercent.innerText = `Rain - ${localStorage.getItem('weatherRainPercent')}mm/h`;
-  city.innerText = localStorage.getItem('weatherCity');
-  country.innerText = `, ${localStorage.getItem('weatherCountry')}`;
-  clouds.innerText = `${localStorage.getItem('weatherClouds')}%`
-  humidity.innerText = `${localStorage.getItem('weatherHumidity')}%`;
-  visibility.innerText = `${localStorage.getItem('weatherVisibility')} KM`;
-  visQuality.innerText = `${localStorage.getItem('visQuality')}`;
-  airQuality.innerText = `${localStorage.getItem('aqi')}`;
-  windDeg.innerText = getWindDirection(localStorage.getItem('weatherWindDeg'));
-  windSpeed.innerText = `${localStorage.getItem('weatherWindSpeed')} KM/H`;
-  sunrise.innerText = convertFromUnixTime(localStorage.getItem('weatherSunrise'));
-  sunset.innerText = convertFromUnixTime(localStorage.getItem('weatherSunset'));
-}
-
-
-
-btn.addEventListener("click", () => {
+function Update() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -116,21 +111,6 @@ btn.addEventListener("click", () => {
             }
 
             windDeg.innerText = getWindDirection(weatherWindDeg);
-
-            localStorage.setItem('weatherStatus', weatherStatus);
-            localStorage.setItem('weatherTemp', weatherTemp);
-            localStorage.setItem('weatherIcon', weatherIcon);
-            localStorage.setItem('weatherCity' ,weatherCity);
-            localStorage.setItem('weatherCountry' ,weatherCountry);
-            localStorage.setItem('weatherClouds', weatherClouds);
-            localStorage.setItem('weatherHumidity', weatherHumidity);
-            localStorage.setItem('weatherRainPercent', weatherRainPercent);
-            localStorage.setItem('visQuality', visQuality.innerText);
-            localStorage.setItem('weatherVisibility', weatherVisibility);
-            localStorage.setItem('weatherWindSpeed', weatherWindSpeed);
-            localStorage.setItem('weatherWindDeg', weatherWindDeg);
-            localStorage.setItem('weatherSunrise', weatherSunrise);
-            localStorage.setItem('weatherSunset', weatherSunset);
             
             rainPercent.innerText = `Rain - ${weatherRainPercent}mm/h`;
             wStatus.innerText = weatherStatus;
@@ -150,6 +130,81 @@ btn.addEventListener("click", () => {
             console.error('Error:', error); // Handle any errors
           });
 
+          fetch(`/api/5day-forecast?lat=${lat}&lon=${lon}`)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              let forecasts = data.list;
+              const dailyData = {};
+
+              forecasts.forEach(forecast => {
+                const date = forecast.dt_txt.split(' ')[0];
+                const forecastTemp = forecast.main.temp;
+                const forecastWeather = forecast.weather[0].main;
+
+                if (!dailyData[date]) {
+                  dailyData[date] = {
+                    min_temp: forecastTemp,
+                    max_temp: forecastTemp,
+                    weather_status: {},
+                  };
+                }
+
+                dailyData[date].min_temp = Math.min(dailyData[date].min_temp, forecastTemp);
+                dailyData[date].max_temp = Math.max(dailyData[date].max_temp, forecastTemp);
+
+                if (!dailyData[date].weather_status[forecastWeather]) {
+                  dailyData[date].weather_status[forecastWeather] = 0;
+                }
+                dailyData[date].weather_status[forecastWeather]++;
+              });
+
+              const result = Object.keys(dailyData).map(date => {
+                const dayStatus = dailyData[date].weather_status;
+                const mostCommonWeather = Object.keys(dayStatus).reduce((a, b) => dayStatus[a] > dayStatus[b] ? a : b);
+
+                return {
+                  date,
+                  min_temp: dailyData[date].min_temp,
+                  max_temp: dailyData[date].max_temp,
+                  weather_status: mostCommonWeather,
+                };
+              });
+
+              console.log(result);
+
+              let i = 1;
+              dayTitles.forEach(dayTitle => {
+                const dayCalendar = new Date(result[i].date);
+                dayTitle.innerText = `${daysOfWeek[dayCalendar.getDay()]}`;
+                i += 1;
+              });
+
+              i = 1;
+
+              dayIcon.forEach(img => {
+                img.src = `/img/${result[i].weather_status}.png`;
+                i += 1;
+              });
+
+              i = 1;
+
+              dayMaxTemp.forEach(dayTemp => {
+                dayTemp.innerText = `${parseInt(result[i].max_temp)}°`;
+                i += 1;
+              });
+
+              i = 1;
+
+              dayMinTemp.forEach(dayTemp => {
+                dayTemp.innerText = `${parseInt(result[i].min_temp)}°`;
+                i += 1;
+              });
+
+            }).catch(error => {
+              console.error('Error:', error);
+            });
+
           fetch(`/api/airQuality?lat=${lat}&lon=${lon}`)
             .then(response => response.json())
             .then(data => {
@@ -166,7 +221,6 @@ btn.addEventListener("click", () => {
               } else if (weatherAirQ === 5) {
                 airQuality.innerText = 'Very Poor';
               }
-              localStorage.setItem('aqi', airQuality.innerText);
             }).catch(error => {
               console.error('Error:', error);
             })
@@ -187,13 +241,4 @@ btn.addEventListener("click", () => {
   } else {
     alert('Geolocation is not supported by this browser.');
   }
-});
-
-const now = new Date();
-const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-const day = daysOfWeek[now.getDay()];
-const hour = parseInt(now.getHours());
-
-dayElem.innerText = day;
-hourElem.innerHTML = `${hour}:00`;
+};

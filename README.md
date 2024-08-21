@@ -24,6 +24,9 @@ Simple weather app that uses OpenWeatherMap's api to fetch local forecast data a
 ### Days 1-2
 ![image](https://github.com/user-attachments/assets/46852020-4b68-47c8-9bcd-6e58fde1b168)
 
+### Days 2-3
+
+
 ## Credits
 
 - OpenWeatherMap <a href="https://openweathermap.org/api">API</a>

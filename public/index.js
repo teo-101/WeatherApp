@@ -173,32 +173,29 @@ function Update() {
 
               console.log(result);
 
-              let i = 1;
-              dayTitles.forEach(dayTitle => {
-                const dayCalendar = new Date(result[i].date);
-                dayTitle.innerText = `${daysOfWeek[dayCalendar.getDay()]}`;
-                i += 1;
+              dayTitles.forEach((dayTitle, index) => {
+                if (result[index]) {
+                  const dayCalendar = new Date(result[index].date);
+                  dayTitle.innerText = `${daysOfWeek[dayCalendar.getDay()]}`;
+                }
               });
-
-              i = 1;
-
-              dayIcon.forEach(img => {
-                img.src = `/img/${result[i].weather_status}.png`;
-                i += 1;
+              
+              dayIcon.forEach((img, index) => {
+                if (result[index]) {
+                  img.src = `/img/${result[index].weather_status}.png`;
+                }
               });
-
-              i = 1;
-
-              dayMaxTemp.forEach(dayTemp => {
-                dayTemp.innerText = `${parseInt(result[i].max_temp)}°`;
-                i += 1;
+              
+              dayMaxTemp.forEach((dayTemp, index) => {
+                if (result[index]) {
+                  dayTemp.innerText = `${parseInt(result[index].max_temp)}°`;
+                }
               });
-
-              i = 1;
-
-              dayMinTemp.forEach(dayTemp => {
-                dayTemp.innerText = `${parseInt(result[i].min_temp)}°`;
-                i += 1;
+              
+              dayMinTemp.forEach((dayTemp, index) => {
+                if (result[index]) {
+                  dayTemp.innerText = `${parseInt(result[index].min_temp)}°`;
+                }
               });
 
             }).catch(error => {
